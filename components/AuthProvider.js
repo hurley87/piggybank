@@ -25,7 +25,7 @@ export const AuthProvider = (props) => {
   const [initial, setInitial] = useState(true);
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
-  const [view, setView] = useState(VIEWS.SIGN_IN);
+  const [view, setView] = useState(VIEWS.SIGN_UP);
   const router = useRouter();
   const { accessToken, ...rest } = props;
 
