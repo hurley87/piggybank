@@ -4,12 +4,13 @@ import Link from 'next/link';
 
 import Auth from '@/components/Auth';
 import { useAuth, VIEWS } from '@/components/AuthProvider';
+import PiggyBank from '@/components/PiggyBank';
 
 export default function Home() {
   const { initial, user, view, signOut } = useAuth();
 
   if (initial) {
-    return <div className="card h-72">Loading...</div>;
+    return <PiggyBank />;
   }
 
   if (view === VIEWS.UPDATE_PASSWORD) {
