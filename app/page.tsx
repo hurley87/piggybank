@@ -5,11 +5,20 @@ import Link from 'next/link';
 import Auth from '@/components/Auth';
 import { useAuth, VIEWS } from '@/components/AuthProvider';
 import PiggyBank from '@/components/PiggyBank';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
   const { initial, user, view, signOut } = useAuth();
+  const [showPiggyBank, setShowPiggyBank] = useState(true);
 
-  if (initial) {
+  // use effect to load PiggyBank component for 2 seconds before showing the auth component
+  useEffect(() => {
+    setTimeout(() => {
+      setShowPiggyBank(false);
+    }, 2000);
+  }, []);
+
+  if (showPiggyBank) {
     return <PiggyBank />;
   }
 
