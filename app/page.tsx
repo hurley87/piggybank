@@ -8,7 +8,7 @@ import PiggyBank from '@/components/PiggyBank';
 import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const { initial, user, view, signOut } = useAuth();
+  const { user, view, signOut } = useAuth();
   const [showPiggyBank, setShowPiggyBank] = useState(true);
 
   // use effect to load PiggyBank component for 2 seconds before showing the auth component
