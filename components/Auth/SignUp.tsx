@@ -30,7 +30,8 @@ const SignUp = () => {
   const [monthlySavings, setMonthlySavings] = useState<string>('2');
   const [retirementIncome, setRetirementIncome] = useState<string>('2');
   const [totalDebt, setTotalDebt] = useState<string>('2');
-  const [houseEquity, setHouseEquity] = useState<string>('2');
+  const [houseEquity, setHouseEquity] = useState<string>('1');
+  const [houseWorth, setHouseWorth] = useState<string>('2');
 
   async function signUp(formData: any) {
     const { error } = await supabase.auth.signUp({
@@ -262,11 +263,11 @@ const SignUp = () => {
                     step="100"
                   />
                   <div className="w-full flex justify-between text-xs px-2">
-                    <span>{'<'} $100K</span>
+                    <span>Under $100,000</span>
                     <span></span>
-                    <span>Somewhere in between</span>
+                    <span>In between</span>
                     <span></span>
-                    <span>{'>'} $300K</span>
+                    <span>$300,000+</span>
                   </div>
                 </div>
                 <ProgressBar width="w-4/12" />
@@ -309,9 +310,9 @@ const SignUp = () => {
                   <div className="w-full flex justify-between text-xs px-2">
                     <span>0</span>
                     <span></span>
-                    <span>Somewhere in between</span>
+                    <span>In between</span>
                     <span></span>
-                    <span>{'>'} $500K</span>
+                    <span>$500,000+</span>
                   </div>
                 </div>
                 <ProgressBar width="w-5/12" />
@@ -354,9 +355,9 @@ const SignUp = () => {
                   <div className="w-full flex justify-between text-xs px-2">
                     <span>0</span>
                     <span></span>
-                    <span>Somewhere in between</span>
+                    <span>In between</span>
                     <span></span>
-                    <span>{'>'} $2K</span>
+                    <span>$2,000+</span>
                   </div>
                 </div>
                 <ProgressBar width="w-6/12" />
@@ -400,9 +401,9 @@ const SignUp = () => {
                   <div className="w-full flex justify-between text-xs px-2">
                     <span>0</span>
                     <span></span>
-                    <span>Somewhere in between</span>
+                    <span>In between</span>
                     <span></span>
-                    <span>{'>'} $200K</span>
+                    <span>$200,000+</span>
                   </div>
                 </div>
                 <ProgressBar width="w-7/12" />
@@ -445,9 +446,9 @@ const SignUp = () => {
                   <div className="w-full flex justify-between text-xs px-2">
                     <span>0</span>
                     <span></span>
-                    <span>Somewhere in between</span>
+                    <span>In between</span>
                     <span></span>
-                    <span>{'>'} $200K</span>
+                    <span>$50,000+</span>
                   </div>
                 </div>
                 <ProgressBar width="w-8/12" />
@@ -488,10 +489,37 @@ const SignUp = () => {
                   <div className="w-full flex justify-between text-xs px-2">
                     <span>Don't own</span>
                     <span></span>
-                    <span>Somewhere in between</span>
+                    <span>In between</span>
                     <span></span>
                     <span>{'>'} $500K</span>
                   </div>
+                  {houseEquity === '1' ||
+                    (houseEquity === '2' && (
+                      <div className="mt-6">
+                        <label
+                          className="w-full block font-semibold text-sm"
+                          htmlFor="houseEquity"
+                        >
+                          How much is the house worth?
+                        </label>
+                        <input
+                          type="range"
+                          onChange={(e) => setHouseWorth(e.target.value)}
+                          min={1}
+                          max="3"
+                          value={houseWorth}
+                          className="range range-primary mt-4"
+                          step="1"
+                        />
+                        <div className="w-full flex justify-between text-xs px-2">
+                          <span>Under 1 Million</span>
+                          <span></span>
+                          <span>In between</span>
+                          <span></span>
+                          <span>2 Million+</span>
+                        </div>
+                      </div>
+                    ))}
                 </div>
                 <ProgressBar width="w-9/12" />
                 <button
