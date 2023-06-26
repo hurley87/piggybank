@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(() => {
       setShowPiggyBank(false);
-    }, 2000);
+    }, 2500);
   }, []);
 
   if (showPiggyBank) {
