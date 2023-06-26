@@ -11,11 +11,9 @@ import supabase from '@/lib/supabase-browser';
 const SignUpSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string().required('Required'),
-  retirementAge: Yup.number().required('Required'),
-  currentAge: Yup.number().required('Required'),
   firstName: Yup.string().required('Required'),
-  dependents: Yup.number().required('Required'),
-  annualIncome: Yup.string().required('Required'),
+  postalCode: Yup.string().length(3).required('Required'),
+  phoneNumber: Yup.string().length(10).required('Required'),
 });
 
 const SignUp = () => {
@@ -23,7 +21,16 @@ const SignUp = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [question, setQuestion] = useState<string>('retirementAge');
+  const [retirementAge, setRetirementAge] = useState<string>('65');
+  const [currentAge, setCurrentAge] = useState<string>('40');
   const [riskTolerance, setRiskTolerance] = useState<string>('50');
+  const [dependents, setDependents] = useState<string>('2');
+  const [annualIncome, setAnnualIncome] = useState<string>('200');
+  const [totalSavings, setTotalSavings] = useState<string>('2');
+  const [monthlySavings, setMonthlySavings] = useState<string>('2');
+  const [retirementIncome, setRetirementIncome] = useState<string>('2');
+  const [totalDebt, setTotalDebt] = useState<string>('2');
+  const [houseEquity, setHouseEquity] = useState<string>('2');
 
   async function signUp(formData: any) {
     const { error } = await supabase.auth.signUp({
@@ -54,11 +61,9 @@ const SignUp = () => {
         initialValues={{
           email: '',
           password: '',
-          retirementAge: 65,
-          currentAge: '',
           firstName: '',
-          dependents: 0,
-          annualIncome: '',
+          postalCode: '',
+          phoneNumber: '',
         }}
         validationSchema={SignUpSchema}
         onSubmit={signUp}
@@ -72,19 +77,27 @@ const SignUp = () => {
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold "
+                    className="w-full block font-semibold text-sm"
                     htmlFor="retirementAge"
                   >
                     Your retirement age
                   </label>
-                  <Field
-                    className={`border border-1 w-full block rounded-md p-4 ${
-                      errors.retirementAge && 'bg-red-50'
-                    }`}
-                    id="retirementAge"
-                    name="retirementAge"
-                    type="number"
+                  <input
+                    type="range"
+                    onChange={(e) => setRetirementAge(e.target.value)}
+                    min={60}
+                    max="70"
+                    value={retirementAge}
+                    className="range range-primary mt-4"
+                    step="5"
                   />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>Under 60</span>
+                    <span></span>
+                    <span>65</span>
+                    <span></span>
+                    <span>Over 70</span>
+                  </div>
                 </div>
                 <button
                   onClick={() => setQuestion('currentAge')}
@@ -92,9 +105,6 @@ const SignUp = () => {
                 >
                   Next
                 </button>
-                {errors.retirementAge ? (
-                  <div className="text-red-600">{errors.retirementAge}</div>
-                ) : null}
               </div>
             )}
 
@@ -103,24 +113,32 @@ const SignUp = () => {
                 <h2 className="w-full text-4xl font-bold ">How old are you?</h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold "
+                    className="w-full block font-semibold text-sm"
                     htmlFor="currentAge"
                   >
                     Your age
                   </label>
-                  <Field
-                    className={`border border-1 w-full block rounded-md p-4 ${
-                      errors.currentAge && 'bg-red-50'
-                    }`}
-                    id="currentAge"
-                    name="currentAge"
-                    type="number"
+                  <input
+                    type="range"
+                    onChange={(e) => setCurrentAge(e.target.value)}
+                    min={30}
+                    max="50"
+                    value={currentAge}
+                    className="range range-primary mt-4"
+                    step="10"
                   />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>30s</span>
+                    <span></span>
+                    <span>40s</span>
+                    <span></span>
+                    <span>50s</span>
+                  </div>
                 </div>
+
                 <ProgressBar width="w-1/12" />
                 <button
-                  disabled={errors.currentAge === undefined ? false : true}
-                  onClick={() => setQuestion('firstName')}
+                  onClick={() => setQuestion('dependents')}
                   className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
@@ -131,8 +149,401 @@ const SignUp = () => {
                 >
                   Back
                 </button>
-                {errors.currentAge ? (
-                  <div className="text-red-600">{errors.currentAge}</div>
+              </div>
+            )}
+
+            {question === 'dependents' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">
+                  How many kids do you have?
+                </h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm"
+                    htmlFor="dependents"
+                  >
+                    Number of dependent children
+                  </label>
+                  <input
+                    type="range"
+                    onChange={(e) => setDependents(e.target.value)}
+                    min={0}
+                    max="4"
+                    value={dependents}
+                    className="range range-primary mt-4"
+                    step="1"
+                  />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>0</span>
+                    <span>1</span>
+                    <span>2</span>
+                    <span>3</span>
+                    <span>3+</span>
+                  </div>
+                </div>
+                <ProgressBar width="w-2/12" />
+                <button
+                  onClick={() => setQuestion('risk')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('currentAge')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+              </div>
+            )}
+
+            {question === 'risk' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">Risk Tolerance</h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm"
+                    htmlFor="dependents"
+                  >
+                    What kind of market ups and downs are you comfortable with?
+                  </label>
+                  <input
+                    type="range"
+                    onChange={(e) => setRiskTolerance(e.target.value)}
+                    min={0}
+                    max="100"
+                    value={riskTolerance}
+                    className="range range-primary mt-4"
+                    step="25"
+                  />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>Little</span>
+                    <span></span>
+                    <span>Moderate</span>
+                    <span></span>
+                    <span>Large</span>
+                  </div>
+                </div>
+                <ProgressBar width="w-3/12" />
+                <button
+                  onClick={() => setQuestion('annualIncome')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('dependents')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+              </div>
+            )}
+
+            {question === 'annualIncome' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">
+                  Annual household income
+                </h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm"
+                    htmlFor="annualIncome"
+                  >
+                    Your gross household income (before taxes)
+                  </label>
+                  <input
+                    type="range"
+                    onChange={(e) => setAnnualIncome(e.target.value)}
+                    min={100}
+                    max="300"
+                    value={annualIncome}
+                    className="range range-primary mt-4"
+                    step="100"
+                  />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>{'<'} $100K</span>
+                    <span></span>
+                    <span>Somewhere in between</span>
+                    <span></span>
+                    <span>{'>'} $300K</span>
+                  </div>
+                </div>
+                <ProgressBar width="w-4/12" />
+                <button
+                  onClick={() => setQuestion('totalSavings')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('risk')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+              </div>
+            )}
+
+            {question === 'totalSavings' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">
+                  Total savings and investments
+                </h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm"
+                    htmlFor="totalSavings"
+                  >
+                    In total, how much do you have in savings and investments?
+                  </label>
+                  <input
+                    type="range"
+                    onChange={(e) => setTotalSavings(e.target.value)}
+                    min={1}
+                    max="3"
+                    value={totalSavings}
+                    className="range range-primary mt-4"
+                    step="1"
+                  />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>0</span>
+                    <span></span>
+                    <span>Somewhere in between</span>
+                    <span></span>
+                    <span>{'>'} $500K</span>
+                  </div>
+                </div>
+                <ProgressBar width="w-5/12" />
+                <button
+                  onClick={() => setQuestion('monthlySavings')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('annualIncome')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+              </div>
+            )}
+
+            {question === 'monthlySavings' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">
+                  Total household monthly savings
+                </h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm"
+                    htmlFor="monthlySavings"
+                  >
+                    In total, how much do you save each month?
+                  </label>
+                  <input
+                    type="range"
+                    onChange={(e) => setMonthlySavings(e.target.value)}
+                    min={1}
+                    max="3"
+                    value={monthlySavings}
+                    className="range range-primary mt-4"
+                    step="1"
+                  />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>0</span>
+                    <span></span>
+                    <span>Somewhere in between</span>
+                    <span></span>
+                    <span>{'>'} $2K</span>
+                  </div>
+                </div>
+                <ProgressBar width="w-6/12" />
+                <button
+                  onClick={() => setQuestion('retirementIncome')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('totalSavings')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+              </div>
+            )}
+
+            {question === 'retirementIncome' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">
+                  Annual household income in retirement
+                </h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm"
+                    htmlFor="retirementIncome"
+                  >
+                    In total, how much do you plan to make each year in your
+                    retirement?
+                  </label>
+                  <input
+                    type="range"
+                    onChange={(e) => setRetirementIncome(e.target.value)}
+                    min={1}
+                    max="3"
+                    value={retirementIncome}
+                    className="range range-primary mt-4"
+                    step="1"
+                  />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>0</span>
+                    <span></span>
+                    <span>Somewhere in between</span>
+                    <span></span>
+                    <span>{'>'} $200K</span>
+                  </div>
+                </div>
+                <ProgressBar width="w-7/12" />
+                <button
+                  onClick={() => setQuestion('totalDebt')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('monthlySavings')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+              </div>
+            )}
+
+            {question === 'totalDebt' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">
+                  Total household debt
+                </h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm"
+                    htmlFor="totalDebt"
+                  >
+                    In total, how much do you owe? (excluding mortgage)
+                  </label>
+                  <input
+                    type="range"
+                    onChange={(e) => setTotalDebt(e.target.value)}
+                    min={1}
+                    max="3"
+                    value={totalDebt}
+                    className="range range-primary mt-4"
+                    step="1"
+                  />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>0</span>
+                    <span></span>
+                    <span>Somewhere in between</span>
+                    <span></span>
+                    <span>{'>'} $200K</span>
+                  </div>
+                </div>
+                <ProgressBar width="w-8/12" />
+                <button
+                  onClick={() => setQuestion('houseEquity')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('retirementIncome')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+              </div>
+            )}
+
+            {question === 'houseEquity' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">Home equity</h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm"
+                    htmlFor="houseEquity"
+                  >
+                    How much equity do you have in your home?
+                  </label>
+                  <input
+                    type="range"
+                    onChange={(e) => setHouseEquity(e.target.value)}
+                    min={1}
+                    max="3"
+                    value={houseEquity}
+                    className="range range-primary mt-4"
+                    step="1"
+                  />
+                  <div className="w-full flex justify-between text-xs px-2">
+                    <span>Don't own</span>
+                    <span></span>
+                    <span>Somewhere in between</span>
+                    <span></span>
+                    <span>{'>'} $500K</span>
+                  </div>
+                </div>
+                <ProgressBar width="w-9/12" />
+                <button
+                  onClick={() => setQuestion('postalCode')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('totalDebt')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+              </div>
+            )}
+
+            {question === 'postalCode' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">Postal Code</h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold "
+                    htmlFor="postalCode"
+                  >
+                    First 3 digits of your postal code (eg. L4C)
+                  </label>
+                  <Field
+                    className={`border border-1 w-full block rounded-md p-4 ${
+                      errors.postalCode && 'bg-red-50'
+                    }`}
+                    id="postalCode"
+                    name="postalCode"
+                    type="text"
+                  />
+                </div>
+                <ProgressBar width="w-10/12" />
+                <button
+                  disabled={errors.postalCode === undefined ? false : true}
+                  onClick={() => setQuestion('firstName')}
+                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+                <button
+                  onClick={() => setQuestion('houseEquity')}
+                  className="text-pink-500 text-md underline"
+                >
+                  Back
+                </button>
+                {errors.postalCode ? (
+                  <div className="text-red-600">{errors.postalCode}</div>
                 ) : null}
               </div>
             )}
@@ -158,16 +569,16 @@ const SignUp = () => {
                     type="text"
                   />
                 </div>
-                <ProgressBar width="w-2/12" />
+                <ProgressBar width="w-11/12" />
                 <button
                   disabled={errors.firstName === undefined ? false : true}
-                  onClick={() => setQuestion('dependents')}
+                  onClick={() => setQuestion('phoneNumber')}
                   className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
-                  onClick={() => setQuestion('currentAge')}
+                  onClick={() => setQuestion('postalCode')}
                   className="text-pink-500 text-md underline"
                 >
                   Back
@@ -178,131 +589,42 @@ const SignUp = () => {
               </div>
             )}
 
-            {question === 'dependents' && (
+            {question === 'phoneNumber' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
-                  How many kids do you have?
+                  Enter your phone number
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
                     className="w-full block font-semibold "
-                    htmlFor="dependents"
+                    htmlFor="phoneNumber"
                   >
-                    Number of dependent children
+                    You'll get a security code
                   </label>
                   <Field
                     className={`border border-1 w-full block rounded-md p-4 ${
-                      errors.dependents && 'bg-red-50'
+                      errors.phoneNumber && 'bg-red-50'
                     }`}
-                    id="dependents"
-                    name="dependents"
-                    type="number"
-                  />
-                </div>
-                <ProgressBar width="w-3/12" />
-                <button
-                  disabled={errors.dependents === undefined ? false : true}
-                  onClick={() => setQuestion('risk')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
-                >
-                  Next
-                </button>
-                <button
-                  onClick={() => setQuestion('firstName')}
-                  className="text-pink-500 text-md underline"
-                >
-                  Back
-                </button>
-                {errors.dependents ? (
-                  <div className="text-red-600">{errors.dependents}</div>
-                ) : null}
-              </div>
-            )}
-
-            {question === 'risk' && (
-              <div className="flex flex-col gap-10">
-                <h2 className="w-full text-4xl font-bold ">Risk Tolerance</h2>
-                <div className="flex flex-col gap-2">
-                  <label
-                    className="w-full block font-semibold "
-                    htmlFor="dependents"
-                  >
-                    What kind of market ups and downs are you comfortable with?
-                  </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setRiskTolerance(e.target.value)}
-                    min={0}
-                    max="100"
-                    value={riskTolerance}
-                    className="range range-primary mt-4"
-                    step="25"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>Little</span>
-                    <span></span>
-                    <span>Moderate</span>
-                    <span></span>
-                    <span>Large</span>
-                  </div>
-                </div>
-                <ProgressBar width="w-4/12" />
-                <button
-                  disabled={errors.dependents === undefined ? false : true}
-                  onClick={() => setQuestion('annualIncome')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
-                >
-                  Next
-                </button>
-                <button
-                  onClick={() => setQuestion('firstName')}
-                  className="text-pink-500 text-md underline"
-                >
-                  Back
-                </button>
-                {errors.dependents ? (
-                  <div className="text-red-600">{errors.dependents}</div>
-                ) : null}
-              </div>
-            )}
-
-            {question === 'annualIncome' && (
-              <div className="flex flex-col gap-10">
-                <h2 className="w-full text-4xl font-bold ">
-                  Annual household income
-                </h2>
-                <div className="flex flex-col gap-2">
-                  <label
-                    className="w-full block font-semibold "
-                    htmlFor="annualIncome"
-                  >
-                    Your gross household income (before taxes)
-                  </label>
-                  <Field
-                    className={`border border-1 w-full block rounded-md p-4 ${
-                      errors.annualIncome && 'bg-red-50'
-                    }`}
-                    id="annualIncome"
-                    name="annualIncome"
+                    id="phoneNumber"
+                    name="phoneNumber"
                     type="text"
                   />
                 </div>
-                <ProgressBar width="w-5/12" />
                 <button
-                  disabled={errors.annualIncome === undefined ? false : true}
-                  onClick={() => setQuestion('dependents')}
+                  disabled={errors.phoneNumber === undefined ? false : true}
+                  onClick={() => setQuestion('phoneNumber')}
                   className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
-                  onClick={() => setQuestion('risk')}
+                  onClick={() => setQuestion('firstName')}
                   className="text-pink-500 text-md underline"
                 >
                   Back
                 </button>
-                {errors.annualIncome ? (
-                  <div className="text-red-600">{errors.annualIncome}</div>
+                {errors.phoneNumber ? (
+                  <div className="text-red-600">{errors.phoneNumber}</div>
                 ) : null}
               </div>
             )}
