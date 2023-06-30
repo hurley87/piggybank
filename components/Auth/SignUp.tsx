@@ -21,17 +21,21 @@ const SignUp = () => {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [question, setQuestion] = useState<string>('retirementAge');
-  const [retirementAge, setRetirementAge] = useState<string>('65');
-  const [currentAge, setCurrentAge] = useState<string>('40');
+  const [retirementAge, setRetirementAge] = useState<string>('61 - 65');
+  const [currentAge, setCurrentAge] = useState<string>('36 - 45');
   const [riskTolerance, setRiskTolerance] = useState<string>('50');
-  const [dependents, setDependents] = useState<string>('2');
-  const [annualIncome, setAnnualIncome] = useState<string>('200');
-  const [totalSavings, setTotalSavings] = useState<string>('2');
-  const [monthlySavings, setMonthlySavings] = useState<string>('2');
-  const [retirementIncome, setRetirementIncome] = useState<string>('2');
-  const [totalDebt, setTotalDebt] = useState<string>('2');
-  const [houseEquity, setHouseEquity] = useState<string>('1');
-  const [houseWorth, setHouseWorth] = useState<string>('2');
+  const [dependents, setDependents] = useState<string>('0');
+  const [annualIncome, setAnnualIncome] = useState<string>(
+    '$150,000 - $249,999'
+  );
+  const [totalSavings, setTotalSavings] = useState<string>(
+    '$250,000 - $999,999'
+  );
+  const [monthlySavings, setMonthlySavings] = useState<string>('$500 - $999');
+  const [retirementIncome, setRetirementIncome] =
+    useState<string>('$75,000 - $99,999');
+  const [totalDebt, setTotalDebt] = useState<string>('less than $40,000');
+  const [houseEquity, setHouseEquity] = useState<string>('No');
 
   async function signUp(formData: any) {
     const { error } = await supabase.auth.signUp({
@@ -55,6 +59,49 @@ const SignUp = () => {
       </div>
     );
   }
+
+  function RadioOption({
+    name,
+    value,
+    currentValue,
+    onChange,
+  }: {
+    name: string;
+    value: string;
+    onChange: any;
+    currentValue: string;
+  }) {
+    return (
+      <div className="flex items-center mb-4 cursor-pointer" onClick={onChange}>
+        <input
+          type="radio"
+          name={name}
+          value={value}
+          checked={value === currentValue}
+          className="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
+          onChange={onChange}
+        />
+        <label className="text-sm font-medium text-white ml-2 block">
+          {value}
+        </label>
+      </div>
+    );
+  }
+
+  function handleSubmitNumber() {
+    console.log('retirementAge: ', retirementAge);
+    console.log('currentAge: ', currentAge);
+    console.log('riskTolerance: ', riskTolerance);
+    console.log('dependents: ', dependents);
+    console.log('annualIncome: ', annualIncome);
+    console.log('totalSavings: ', totalSavings);
+    console.log('monthlySavings: ', monthlySavings);
+    console.log('retirementIncome: ', retirementIncome);
+    console.log('totalDebt: ', totalDebt);
+    console.log('houseEquity: ', houseEquity);
+  }
+
+  console.log(retirementAge);
 
   return (
     <div className="w-full p-4 max-w-sm mx-auto">
@@ -83,22 +130,24 @@ const SignUp = () => {
                   >
                     Your retirement age
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setRetirementAge(e.target.value)}
-                    min={60}
-                    max="70"
-                    value={retirementAge}
-                    className="range range-primary mt-4"
-                    step="5"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>Under 60</span>
-                    <span></span>
-                    <span>65</span>
-                    <span></span>
-                    <span>Over 70</span>
-                  </div>
+                  <fieldset>
+                    {[
+                      'Over 65',
+                      '61 - 65',
+                      '56 - 60',
+                      '51 - 55',
+                      '46 - 50',
+                      '36 - 45',
+                      'Under 35',
+                    ].map((value) => (
+                      <RadioOption
+                        name="retirementAge"
+                        value={value}
+                        onChange={() => setRetirementAge(value)}
+                        currentValue={retirementAge}
+                      />
+                    ))}
+                  </fieldset>
                 </div>
                 <button
                   onClick={() => setQuestion('currentAge')}
@@ -108,7 +157,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'currentAge' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">How old are you?</h2>
@@ -119,22 +167,24 @@ const SignUp = () => {
                   >
                     Your age
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setCurrentAge(e.target.value)}
-                    min={30}
-                    max="50"
-                    value={currentAge}
-                    className="range range-primary mt-4"
-                    step="10"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>30s</span>
-                    <span></span>
-                    <span>40s</span>
-                    <span></span>
-                    <span>50s</span>
-                  </div>
+                  <fieldset>
+                    {[
+                      'Over 65',
+                      '61 - 65',
+                      '56 - 60',
+                      '51 - 55',
+                      '46 - 50',
+                      '36 - 45',
+                      'Under 35',
+                    ].map((value) => (
+                      <RadioOption
+                        name="currentAge"
+                        value={value}
+                        onChange={() => setCurrentAge(value)}
+                        currentValue={currentAge}
+                      />
+                    ))}
+                  </fieldset>
                 </div>
 
                 <ProgressBar width="w-1/12" />
@@ -152,7 +202,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'dependents' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
@@ -165,22 +214,16 @@ const SignUp = () => {
                   >
                     Number of dependent children
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setDependents(e.target.value)}
-                    min={0}
-                    max="4"
-                    value={dependents}
-                    className="range range-primary mt-4"
-                    step="1"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>0</span>
-                    <span>1</span>
-                    <span>2</span>
-                    <span>3</span>
-                    <span>3+</span>
-                  </div>
+                  <fieldset>
+                    {['0', '1', '2', '3', '3+'].map((value) => (
+                      <RadioOption
+                        name="currentAge"
+                        value={value}
+                        onChange={() => setDependents(value)}
+                        currentValue={dependents}
+                      />
+                    ))}
+                  </fieldset>
                 </div>
                 <ProgressBar width="w-2/12" />
                 <button
@@ -197,7 +240,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'risk' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">Risk Tolerance</h2>
@@ -240,7 +282,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'annualIncome' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
@@ -251,24 +292,25 @@ const SignUp = () => {
                     className="w-full block font-semibold text-sm"
                     htmlFor="annualIncome"
                   >
-                    Your gross household income (before taxes)
+                    Your gross household income each year (before taxes)
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setAnnualIncome(e.target.value)}
-                    min={100}
-                    max="300"
-                    value={annualIncome}
-                    className="range range-primary mt-4"
-                    step="100"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>Under $100,000</span>
-                    <span></span>
-                    <span>In between</span>
-                    <span></span>
-                    <span>$300,000+</span>
-                  </div>
+                  <fieldset>
+                    {[
+                      'less than $40,000',
+                      '$40,000 - $74,999',
+                      '$75,000 - $99,999',
+                      '$100,000 - $149,999',
+                      '$150,000 - $249,999',
+                      'Over $250,000',
+                    ].map((value) => (
+                      <RadioOption
+                        name="currentAge"
+                        value={value}
+                        onChange={() => setAnnualIncome(value)}
+                        currentValue={annualIncome}
+                      />
+                    ))}
+                  </fieldset>
                 </div>
                 <ProgressBar width="w-4/12" />
                 <button
@@ -285,7 +327,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'totalSavings' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
@@ -298,22 +339,23 @@ const SignUp = () => {
                   >
                     In total, how much do you have in savings and investments?
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setTotalSavings(e.target.value)}
-                    min={1}
-                    max="3"
-                    value={totalSavings}
-                    className="range range-primary mt-4"
-                    step="1"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>0</span>
-                    <span></span>
-                    <span>In between</span>
-                    <span></span>
-                    <span>$500,000+</span>
-                  </div>
+                  <fieldset>
+                    {[
+                      'less than $25,000',
+                      '$25,000 - $99,999',
+                      '$100,000 - $249,999',
+                      '$250,000 - $999,999',
+                      '$1,000,000 - $4,999,999',
+                      'Over $5,000,000',
+                    ].map((value) => (
+                      <RadioOption
+                        name="currentAge"
+                        value={value}
+                        onChange={() => setTotalSavings(value)}
+                        currentValue={totalSavings}
+                      />
+                    ))}
+                  </fieldset>
                 </div>
                 <ProgressBar width="w-5/12" />
                 <button
@@ -330,7 +372,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'monthlySavings' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
@@ -343,22 +384,23 @@ const SignUp = () => {
                   >
                     In total, how much do you save each month?
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setMonthlySavings(e.target.value)}
-                    min={1}
-                    max="3"
-                    value={monthlySavings}
-                    className="range range-primary mt-4"
-                    step="1"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>0</span>
-                    <span></span>
-                    <span>In between</span>
-                    <span></span>
-                    <span>$2,000+</span>
-                  </div>
+                  <fieldset>
+                    {[
+                      'Less than $100',
+                      '$100 - $249',
+                      '$250 - $499',
+                      '$500 - $999',
+                      '$1,000 - $1,999',
+                      'Over $2,000',
+                    ].map((value) => (
+                      <RadioOption
+                        name="currentAge"
+                        value={value}
+                        onChange={() => setMonthlySavings(value)}
+                        currentValue={monthlySavings}
+                      />
+                    ))}
+                  </fieldset>
                 </div>
                 <ProgressBar width="w-6/12" />
                 <button
@@ -386,25 +428,25 @@ const SignUp = () => {
                     className="w-full block font-semibold text-sm"
                     htmlFor="retirementIncome"
                   >
-                    In total, how much do you plan to make each year in your
-                    retirement?
+                    In total, how much d you need each year for your retirement?
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setRetirementIncome(e.target.value)}
-                    min={1}
-                    max="3"
-                    value={retirementIncome}
-                    className="range range-primary mt-4"
-                    step="1"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>0</span>
-                    <span></span>
-                    <span>In between</span>
-                    <span></span>
-                    <span>$200,000+</span>
-                  </div>
+                  <fieldset>
+                    {[
+                      'less than $40,000',
+                      '$40,000 - $74,999',
+                      '$75,000 - $99,999',
+                      '$100,000 - $149,999',
+                      '$150,000 - $249,999',
+                      'Over $250,000',
+                    ].map((value) => (
+                      <RadioOption
+                        name="currentAge"
+                        value={value}
+                        onChange={() => setRetirementIncome(value)}
+                        currentValue={retirementIncome}
+                      />
+                    ))}
+                  </fieldset>
                 </div>
                 <ProgressBar width="w-7/12" />
                 <button
@@ -421,7 +463,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'totalDebt' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
@@ -434,22 +475,21 @@ const SignUp = () => {
                   >
                     In total, how much do you owe? (excluding mortgage)
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setTotalDebt(e.target.value)}
-                    min={1}
-                    max="3"
-                    value={totalDebt}
-                    className="range range-primary mt-4"
-                    step="1"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>0</span>
-                    <span></span>
-                    <span>In between</span>
-                    <span></span>
-                    <span>$50,000+</span>
-                  </div>
+                  <fieldset>
+                    {[
+                      'less than $40,000',
+                      '$40,000 - $74,999',
+                      '$75,000 - $99,999',
+                      'Over $250,000',
+                    ].map((value) => (
+                      <RadioOption
+                        name="currentAge"
+                        value={value}
+                        onChange={() => setTotalDebt(value)}
+                        currentValue={totalDebt}
+                      />
+                    ))}
+                  </fieldset>
                 </div>
                 <ProgressBar width="w-8/12" />
                 <button
@@ -466,7 +506,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'houseEquity' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">Home equity</h2>
@@ -475,51 +514,23 @@ const SignUp = () => {
                     className="w-full block font-semibold text-sm"
                     htmlFor="houseEquity"
                   >
-                    How much equity do you have in your home?
+                    Do you have a mortgage?
                   </label>
-                  <input
-                    type="range"
-                    onChange={(e) => setHouseEquity(e.target.value)}
-                    min={1}
-                    max="3"
-                    value={houseEquity}
-                    className="range range-primary mt-4"
-                    step="1"
-                  />
-                  <div className="w-full flex justify-between text-xs px-2">
-                    <span>Don't own</span>
-                    <span></span>
-                    <span>In between</span>
-                    <span></span>
-                    <span>{'>'} $500K</span>
-                  </div>
-                  {houseEquity === '1' ||
-                    (houseEquity === '2' && (
-                      <div className="mt-6">
-                        <label
-                          className="w-full block font-semibold text-sm"
-                          htmlFor="houseEquity"
-                        >
-                          How much is the house worth?
-                        </label>
-                        <input
-                          type="range"
-                          onChange={(e) => setHouseWorth(e.target.value)}
-                          min={1}
-                          max="3"
-                          value={houseWorth}
-                          className="range range-primary mt-4"
-                          step="1"
-                        />
-                        <div className="w-full flex justify-between text-xs px-2">
-                          <span>Under 1 Million</span>
-                          <span></span>
-                          <span>In between</span>
-                          <span></span>
-                          <span>2 Million+</span>
-                        </div>
-                      </div>
+                  <fieldset>
+                    {[
+                      'No',
+                      "Yes, I'm a first time buyer",
+                      'Yes, I own my home outright',
+                      'Yes, I own multiple properties',
+                    ].map((value) => (
+                      <RadioOption
+                        name="currentAge"
+                        value={value}
+                        onChange={() => setHouseEquity(value)}
+                        currentValue={houseEquity}
+                      />
                     ))}
+                  </fieldset>
                 </div>
                 <ProgressBar width="w-9/12" />
                 <button
@@ -536,7 +547,6 @@ const SignUp = () => {
                 </button>
               </div>
             )}
-
             {question === 'postalCode' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">Postal Code</h2>
@@ -575,7 +585,6 @@ const SignUp = () => {
                 ) : null}
               </div>
             )}
-
             {question === 'firstName' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
@@ -616,7 +625,6 @@ const SignUp = () => {
                 ) : null}
               </div>
             )}
-
             {question === 'phoneNumber' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
@@ -639,8 +647,7 @@ const SignUp = () => {
                   />
                 </div>
                 <button
-                  disabled={errors.phoneNumber === undefined ? false : true}
-                  onClick={() => setQuestion('phoneNumber')}
+                  onClick={handleSubmitNumber}
                   className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
@@ -656,7 +663,6 @@ const SignUp = () => {
                 ) : null}
               </div>
             )}
-
             {question === 'email' && (
               <>
                 <label htmlFor="email">Email</label>
@@ -674,7 +680,6 @@ const SignUp = () => {
                 ) : null}
               </>
             )}
-
             {question === 'password' && (
               <>
                 <label htmlFor="password">Password</label>
