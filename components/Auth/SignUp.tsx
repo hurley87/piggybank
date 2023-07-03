@@ -84,9 +84,7 @@ const SignUp = () => {
           className="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
           onChange={onChange}
         />
-        <label className="text-sm font-medium text-white ml-2 block">
-          {value}
-        </label>
+        <label className="text-sm font-medium ml-2 block">{value}</label>
       </div>
     );
   }
@@ -139,8 +137,6 @@ const SignUp = () => {
       setAnswer((prev) => prev + chunkValue);
     }
   }
-
-  console.log(retirementAge);
 
   return (
     <div className="w-full p-4 max-w-sm mx-auto">
@@ -591,7 +587,7 @@ const SignUp = () => {
                     First 3 digits of your postal code (eg. L4C)
                   </label>
                   <Field
-                    className={`border border-1 w-full block rounded-md p-4 ${
+                    className={`border border-1 w-full block rounded-md p-4 bg-white ${
                       errors.postalCode && 'bg-red-50'
                     }`}
                     id="postalCode"
@@ -631,7 +627,7 @@ const SignUp = () => {
                     Your First Name
                   </label>
                   <input
-                    className={`border border-1 w-full block rounded-md p-4 ${
+                    className={`border border-1 w-full block rounded-md p-4 bg-white ${
                       firstName === '' && 'bg-red-50'
                     }`}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -669,9 +665,7 @@ const SignUp = () => {
                     You'll get a security code
                   </label>
                   <Field
-                    className={`border border-1 w-full block rounded-md p-4 ${
-                      errors.phoneNumber && 'bg-red-50'
-                    }`}
+                    className={`border border-1 w-full block rounded-md p-4 bg-white`}
                     id="phoneNumber"
                     name="phoneNumber"
                     type="text"
@@ -705,7 +699,7 @@ const SignUp = () => {
               <>
                 <label htmlFor="email">Email</label>
                 <Field
-                  className={`bg-green-200 text-green-600 ${
+                  className={`text-green-600 bg-white ${
                     errors.email && 'bg-red-50'
                   }`}
                   id="email"
