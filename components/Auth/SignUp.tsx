@@ -90,16 +90,6 @@ const SignUp = () => {
   }
 
   async function handleSubmitNumber() {
-    console.log('retirementAge: ', retirementAge);
-    console.log('currentAge: ', currentAge);
-    console.log('riskTolerance: ', riskTolerance);
-    console.log('dependents: ', dependents);
-    console.log('annualIncome: ', annualIncome);
-    console.log('totalSavings: ', totalSavings);
-    console.log('monthlySavings: ', monthlySavings);
-    console.log('retirementIncome: ', retirementIncome);
-    console.log('totalDebt: ', totalDebt);
-    console.log('houseEquity: ', houseEquity);
     setQuestion('answer');
     const prompt = endent`
     Consider ${firstName}, a Canadian between the ages of ${currentAge} with ${dependents} kids that has an annual income between ${annualIncome}, has between ${totalSavings} in savings and investments, and saves between ${monthlySavings} per month. They'd like between ${retirementIncome} income per year in retirement and they have ${totalDebt} in debt. I asked if they have a mortgage  and they said "${houseEquity}". Can they retire between the ages of ${retirementAge}? Give their likely retirement age in one sentence and list your assumptions after. Be concise and only recommend they speak to a financial advisor at the end. 
@@ -121,7 +111,7 @@ const SignUp = () => {
     }
 
     const data = answerResponse.body;
-    console.log(data);
+
     if (!data) {
       return;
     }
