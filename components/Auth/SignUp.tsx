@@ -7,11 +7,12 @@ import * as Yup from 'yup';
 
 // import { useAuth, VIEWS } from '@/components/AuthProvider';
 import supabase from '@/lib/supabase-browser';
+import { Answer } from '../Answer';
+import endent from 'endent';
 
 const SignUpSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string().required('Required'),
-  firstName: Yup.string().required('Required'),
   postalCode: Yup.string().length(3).required('Required'),
   phoneNumber: Yup.string().length(10).required('Required'),
 });
@@ -36,6 +37,8 @@ const SignUp = () => {
     useState<string>('$75,000 - $99,999');
   const [totalDebt, setTotalDebt] = useState<string>('less than $40,000');
   const [houseEquity, setHouseEquity] = useState<string>('No');
+  const [answer, setAnswer] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
 
   async function signUp(formData: any) {
     const { error } = await supabase.auth.signUp({
@@ -88,7 +91,7 @@ const SignUp = () => {
     );
   }
 
-  function handleSubmitNumber() {
+  async function handleSubmitNumber() {
     console.log('retirementAge: ', retirementAge);
     console.log('currentAge: ', currentAge);
     console.log('riskTolerance: ', riskTolerance);
@@ -99,6 +102,42 @@ const SignUp = () => {
     console.log('retirementIncome: ', retirementIncome);
     console.log('totalDebt: ', totalDebt);
     console.log('houseEquity: ', houseEquity);
+    setQuestion('answer');
+    const prompt = endent`
+    Consider ${firstName}, a Canadian between the ages of ${currentAge} with ${dependents} kids that has an annual income between ${annualIncome}, has between ${totalSavings} in savings and investments, and saves between ${monthlySavings} per month. They'd like between ${retirementIncome} income per year in retirement and they have ${totalDebt} in debt. I asked if they have a mortgage  and they said "${houseEquity}". Can they retire between the ages of ${retirementAge}? Give their likely retirement age in one sentence and list your assumptions after. Be concise and only recommend they speak to a financial advisor at the end. 
+
+    When you answer, answer in a friendly, playful tone and write your answer as if you were giving casual advice to ${firstName}. 
+
+    `;
+
+    const answerResponse = await fetch('/api/answer', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ prompt }),
+    });
+
+    if (!answerResponse.ok) {
+      console.log('ERRROR');
+    }
+
+    const data = answerResponse.body;
+    console.log(data);
+    if (!data) {
+      return;
+    }
+
+    const reader = data.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
+
+    while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      const chunkValue = decoder.decode(value);
+      setAnswer((prev) => prev + chunkValue);
+    }
   }
 
   console.log(retirementAge);
@@ -109,7 +148,6 @@ const SignUp = () => {
         initialValues={{
           email: '',
           password: '',
-          firstName: '',
           postalCode: '',
           phoneNumber: '',
         }}
@@ -125,28 +163,22 @@ const SignUp = () => {
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="retirementAge"
                   >
                     Your retirement age
                   </label>
                   <fieldset>
-                    {[
-                      'Over 65',
-                      '61 - 65',
-                      '56 - 60',
-                      '51 - 55',
-                      '46 - 50',
-                      '36 - 45',
-                      'Under 35',
-                    ].map((value) => (
-                      <RadioOption
-                        name="retirementAge"
-                        value={value}
-                        onChange={() => setRetirementAge(value)}
-                        currentValue={retirementAge}
-                      />
-                    ))}
+                    {['Over 65', '61 - 65', '56 - 60', '51 - 55'].map(
+                      (value) => (
+                        <RadioOption
+                          name="retirementAge"
+                          value={value}
+                          onChange={() => setRetirementAge(value)}
+                          currentValue={retirementAge}
+                        />
+                      )
+                    )}
                   </fieldset>
                 </div>
                 <button
@@ -162,7 +194,7 @@ const SignUp = () => {
                 <h2 className="w-full text-4xl font-bold ">How old are you?</h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="currentAge"
                   >
                     Your age
@@ -209,7 +241,7 @@ const SignUp = () => {
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="dependents"
                   >
                     Number of dependent children
@@ -245,7 +277,7 @@ const SignUp = () => {
                 <h2 className="w-full text-4xl font-bold ">Risk Tolerance</h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="dependents"
                   >
                     What kind of market ups and downs are you comfortable with?
@@ -289,7 +321,7 @@ const SignUp = () => {
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="annualIncome"
                   >
                     Your gross household income each year (before taxes)
@@ -334,7 +366,7 @@ const SignUp = () => {
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="totalSavings"
                   >
                     In total, how much do you have in savings and investments?
@@ -379,7 +411,7 @@ const SignUp = () => {
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="monthlySavings"
                   >
                     In total, how much do you save each month?
@@ -425,10 +457,11 @@ const SignUp = () => {
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="retirementIncome"
                   >
-                    In total, how much d you need each year for your retirement?
+                    In total, how much do you need each year for your
+                    retirement?
                   </label>
                   <fieldset>
                     {[
@@ -470,7 +503,7 @@ const SignUp = () => {
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="totalDebt"
                   >
                     In total, how much do you owe? (excluding mortgage)
@@ -511,7 +544,7 @@ const SignUp = () => {
                 <h2 className="w-full text-4xl font-bold ">Home equity</h2>
                 <div className="flex flex-col gap-2">
                   <label
-                    className="w-full block font-semibold text-sm"
+                    className="w-full block font-semibold text-sm mb-2"
                     htmlFor="houseEquity"
                   >
                     Do you have a mortgage?
@@ -597,10 +630,11 @@ const SignUp = () => {
                   >
                     Your First Name
                   </label>
-                  <Field
+                  <input
                     className={`border border-1 w-full block rounded-md p-4 ${
-                      errors.firstName && 'bg-red-50'
+                      firstName === '' && 'bg-red-50'
                     }`}
+                    onChange={(e) => setFirstName(e.target.value)}
                     id="firstName"
                     name="firstName"
                     type="text"
@@ -608,7 +642,7 @@ const SignUp = () => {
                 </div>
                 <ProgressBar width="w-11/12" />
                 <button
-                  disabled={errors.firstName === undefined ? false : true}
+                  disabled={firstName === ''}
                   onClick={() => setQuestion('phoneNumber')}
                   className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
@@ -620,9 +654,6 @@ const SignUp = () => {
                 >
                   Back
                 </button>
-                {errors.firstName ? (
-                  <div className="text-red-600">{errors.firstName}</div>
-                ) : null}
               </div>
             )}
             {question === 'phoneNumber' && (
@@ -663,6 +694,13 @@ const SignUp = () => {
                 ) : null}
               </div>
             )}
+
+            {question === 'answer' && (
+              <p className="pt-4">
+                <Answer text={answer} />
+              </p>
+            )}
+
             {question === 'email' && (
               <>
                 <label htmlFor="email">Email</label>
