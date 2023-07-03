@@ -1,7 +1,7 @@
 import { OpenAIStream } from '@/utils';
 
 export const config = {
-  runtime: 'edge',
+  runtime: 'runtime',
 };
 
 export async function POST(req: Request): Promise<Response> {
