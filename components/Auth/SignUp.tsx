@@ -92,7 +92,7 @@ const SignUp = () => {
   async function handleSubmitNumber() {
     setQuestion('answer');
     const prompt = endent`
-    Consider ${firstName}, a Canadian between the ages of ${currentAge} with ${dependents} kids that has an annual income between ${annualIncome}, has between ${totalSavings} in savings and investments, and saves between ${monthlySavings} per month. They'd like between ${retirementIncome} income per year in retirement and they have ${totalDebt} in debt. I asked if they have a mortgage  and they said "${houseEquity}". Can they retire between the ages of ${retirementAge}? Give their likely retirement age in one sentence and list your assumptions after. Be concise and only recommend they speak to a financial advisor at the end. 
+    Consider ${firstName}, a Canadian between the ages of ${currentAge} with ${dependents} kids that has an annual income between ${annualIncome}, has between ${totalSavings} in savings and investments, and saves between ${monthlySavings} per month. They'd like between ${retirementIncome} income per year in retirement and they have ${totalDebt} in debt. I asked if they have a mortgage  and they said "${houseEquity}". Can they retire between the ages of ${retirementAge}? Give their likely retirement age in one sentence and three tips that may help them retire earlier. Be concise and only recommend they speak to a financial advisor at the end. 
 
     When you answer, answer in a friendly, playful tone and write your answer as if you were giving casual advice to ${firstName}. 
 
@@ -537,7 +537,7 @@ const SignUp = () => {
                   </label>
                   <fieldset>
                     {[
-                      'No',
+                      'No, I rent',
                       "Yes, I'm a first time buyer",
                       'Yes, I own my home outright',
                       'Yes, I own multiple properties',
