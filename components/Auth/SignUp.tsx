@@ -21,7 +21,7 @@ const SignUp = () => {
   // const { setView } = useAuth();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
-  const [question, setQuestion] = useState<string>('retirementAge');
+  const [question, setQuestion] = useState<string>('currentAge');
   const [retirementAge, setRetirementAge] = useState<string>('61 - 65');
   const [currentAge, setCurrentAge] = useState<string>('36 - 45');
   const [riskTolerance, setRiskTolerance] = useState<string>('50');
@@ -58,7 +58,7 @@ const SignUp = () => {
   function ProgressBar({ width }: { width: string }) {
     return (
       <div className="w-full bg-gray-100 h-4 rounded-full">
-        <div className={width + ' bg-pink-500 rounded-full h-4'}></div>
+        <div className={width + ' bg-green-500 rounded-full h-4'}></div>
       </div>
     );
   }
@@ -142,39 +142,6 @@ const SignUp = () => {
       >
         {({ errors, touched }) => (
           <Form className="column w-full">
-            {question === 'retirementAge' && (
-              <div className="flex flex-col gap-10">
-                <h2 className="w-full text-4xl font-bold ">
-                  When would you like to retire?
-                </h2>
-                <div className="flex flex-col gap-2">
-                  <label
-                    className="w-full block font-semibold text-sm mb-2"
-                    htmlFor="retirementAge"
-                  >
-                    Your retirement age
-                  </label>
-                  <fieldset>
-                    {['Over 65', '61 - 65', '56 - 60', '51 - 55'].map(
-                      (value) => (
-                        <RadioOption
-                          name="retirementAge"
-                          value={value}
-                          onChange={() => setRetirementAge(value)}
-                          currentValue={retirementAge}
-                        />
-                      )
-                    )}
-                  </fieldset>
-                </div>
-                <button
-                  onClick={() => setQuestion('currentAge')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold"
-                >
-                  Next
-                </button>
-              </div>
-            )}
             {question === 'currentAge' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">How old are you?</h2>
@@ -204,22 +171,55 @@ const SignUp = () => {
                     ))}
                   </fieldset>
                 </div>
-
                 <ProgressBar width="w-1/12" />
                 <button
+                  onClick={() => setQuestion('retirementAge')}
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+            {question === 'retirementAge' && (
+              <div className="flex flex-col gap-10">
+                <h2 className="w-full text-4xl font-bold ">
+                  When would you like to retire?
+                </h2>
+                <div className="flex flex-col gap-2">
+                  <label
+                    className="w-full block font-semibold text-sm mb-2"
+                    htmlFor="retirementAge"
+                  >
+                    Your retirement age
+                  </label>
+                  <fieldset>
+                    {['Over 65', '61 - 65', '56 - 60', '51 - 55'].map(
+                      (value) => (
+                        <RadioOption
+                          name="retirementAge"
+                          value={value}
+                          onChange={() => setRetirementAge(value)}
+                          currentValue={retirementAge}
+                        />
+                      )
+                    )}
+                  </fieldset>
+                </div>
+                <button
                   onClick={() => setQuestion('dependents')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('retirementAge')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
               </div>
             )}
+
             {question === 'dependents' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold ">
@@ -246,13 +246,13 @@ const SignUp = () => {
                 <ProgressBar width="w-2/12" />
                 <button
                   onClick={() => setQuestion('risk')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('currentAge')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -266,7 +266,7 @@ const SignUp = () => {
                     className="w-full block font-semibold text-sm mb-2"
                     htmlFor="dependents"
                   >
-                    What kind of market ups and downs are you comfortable with?
+                    How much risk are you willing to take with your savings?
                   </label>
                   <input
                     type="range"
@@ -288,13 +288,13 @@ const SignUp = () => {
                 <ProgressBar width="w-3/12" />
                 <button
                   onClick={() => setQuestion('annualIncome')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('dependents')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -333,13 +333,13 @@ const SignUp = () => {
                 <ProgressBar width="w-4/12" />
                 <button
                   onClick={() => setQuestion('totalSavings')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('risk')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -378,13 +378,13 @@ const SignUp = () => {
                 <ProgressBar width="w-5/12" />
                 <button
                   onClick={() => setQuestion('monthlySavings')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('annualIncome')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -400,7 +400,7 @@ const SignUp = () => {
                     className="w-full block font-semibold text-sm mb-2"
                     htmlFor="monthlySavings"
                   >
-                    In total, how much do you save each month?
+                    In total, how much do you think you save each month?
                   </label>
                   <fieldset>
                     {[
@@ -423,13 +423,13 @@ const SignUp = () => {
                 <ProgressBar width="w-6/12" />
                 <button
                   onClick={() => setQuestion('retirementIncome')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('totalSavings')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -446,7 +446,7 @@ const SignUp = () => {
                     className="w-full block font-semibold text-sm mb-2"
                     htmlFor="retirementIncome"
                   >
-                    In total, how much do you need each year for your
+                    In total, how much do you think you need each year for your
                     retirement?
                   </label>
                   <fieldset>
@@ -470,13 +470,13 @@ const SignUp = () => {
                 <ProgressBar width="w-7/12" />
                 <button
                   onClick={() => setQuestion('totalDebt')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('monthlySavings')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -513,13 +513,13 @@ const SignUp = () => {
                 <ProgressBar width="w-8/12" />
                 <button
                   onClick={() => setQuestion('houseEquity')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('retirementIncome')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -539,7 +539,7 @@ const SignUp = () => {
                     {[
                       'No, I rent',
                       "Yes, I'm a first time buyer",
-                      'Yes, I own my home outright',
+                      'Yes, I own my home',
                       'Yes, I own multiple properties',
                     ].map((value) => (
                       <RadioOption
@@ -554,13 +554,13 @@ const SignUp = () => {
                 <ProgressBar width="w-9/12" />
                 <button
                   onClick={() => setQuestion('postalCode')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('totalDebt')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -589,13 +589,13 @@ const SignUp = () => {
                 <button
                   disabled={errors.postalCode === undefined ? false : true}
                   onClick={() => setQuestion('firstName')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('houseEquity')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -630,13 +630,13 @@ const SignUp = () => {
                 <button
                   disabled={firstName === ''}
                   onClick={() => setQuestion('phoneNumber')}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('postalCode')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>
@@ -663,13 +663,13 @@ const SignUp = () => {
                 </div>
                 <button
                   onClick={handleSubmitNumber}
-                  className="bg-pink-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+                  className="bg-green-500 text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
                 >
                   Next
                 </button>
                 <button
                   onClick={() => setQuestion('firstName')}
-                  className="text-pink-500 text-md underline"
+                  className="text-green-500 text-md underline"
                 >
                   Back
                 </button>

@@ -23,9 +23,6 @@ export default async function RootLayout({ children }: Props) {
     <html lang="en">
       <body>
         <div className="flex min-h-screen flex-col items-center py-6 bg-white text-gray-700">
-          <h1 className="mb-12 text-xl font-black sm:text-3xl text-pink-500">
-            PiggyBank
-          </h1>
           <AuthProvider accessToken={accessToken}>{children}</AuthProvider>
         </div>
       </body>
