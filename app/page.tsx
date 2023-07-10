@@ -18,11 +18,10 @@ export default async function Index() {
         <>
           <div className="w-full relative flex justify-between">
             <Image
-              src="/logo.png"
+              src="https://advisorsavvy.com/wp-content/uploads/2019/05/AdvisorSavvy-Logo-RGB.png"
               alt="logo"
-              width={40}
+              width={162}
               height={40}
-              className="rounded-full"
             />
             <div className="flex gap-2">
               <p className="pt-2">{user.phone}</p>

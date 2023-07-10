@@ -16,7 +16,7 @@ export default function LogoutButton() {
 
   return (
     <button
-      className="py-2 px-4 rounded-md bg-primary text-white"
+      className="py-2 px-4 bg-primary text-white uppercase font-montserrat font-bold"
       onClick={signOut}
     >
       Logout

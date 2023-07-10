@@ -43,7 +43,7 @@ export const Answer: React.FC<AnswerProps> = ({ text, addPlan }) => {
   }
 
   return (
-    <div className="whitespace-pre-line	pb-20">
+    <div className="whitespace-pre-line	pb-20 font-nunito">
       {words.map((word, index) => (
         <span
           key={index}
@@ -56,7 +56,7 @@ export const Answer: React.FC<AnswerProps> = ({ text, addPlan }) => {
       {showLogin && (
         <button
           onClick={updateUser}
-          className="bg-primary text-white p-4 rounded-full text-xl font-bold duration-200 hover:bg-green-600 w-full block text-center mt-4"
+          className="bg-primary text-white p-4 rounded-full text-xl font-bold duration-200 hover:bg-green-600 w-full block text-center mt-4 font-montserrat uppercase"
         >
           Continue
         </button>

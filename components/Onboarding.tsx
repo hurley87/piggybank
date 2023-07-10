@@ -64,7 +64,9 @@ const Onboarding = () => {
           className="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
           onChange={onChange}
         />
-        <label className="text-sm font-medium ml-2 block">{value}</label>
+        <label className="text-sm font-medium ml-2 block font-nunito">
+          {value}
+        </label>
       </div>
     );
   }
@@ -192,10 +194,12 @@ const Onboarding = () => {
       <div className="column w-full">
         {view === 'currentAge' && (
           <div className="flex flex-col gap-10 w-full">
-            <h2 className="w-full text-4xl font-bold ">How old are you?</h2>
+            <h2 className="w-full text-4xl font-bold font-montserrat">
+              How old are you?
+            </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nunito"
                 htmlFor="currentAge"
               >
                 Your age
@@ -222,7 +226,7 @@ const Onboarding = () => {
 
             <button
               onClick={() => setView('retirementAge')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -230,12 +234,12 @@ const Onboarding = () => {
         )}
         {view === 'retirementAge' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               When would you like to retire?
             </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="retirementAge"
               >
                 Your retirement age
@@ -254,7 +258,7 @@ const Onboarding = () => {
             <ProgressBar width="w-1/12" />
             <button
               onClick={() => setView('dependents')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold"
+              className="bg-primary text-white p-4 text-xl font-bold"
             >
               Next
             </button>
@@ -269,12 +273,12 @@ const Onboarding = () => {
 
         {view === 'dependents' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               How many kids do you have?
             </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="dependents"
               >
                 Number of dependent children
@@ -293,7 +297,7 @@ const Onboarding = () => {
             <ProgressBar width="w-2/12" />
             <button
               onClick={() => setView('risk')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -307,10 +311,12 @@ const Onboarding = () => {
         )}
         {view === 'risk' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">Risk Tolerance</h2>
+            <h2 className="w-full text-4xl font-bold font-montserrat">
+              Risk Tolerance
+            </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="dependents"
               >
                 How much risk are you willing to take with your savings?
@@ -335,7 +341,7 @@ const Onboarding = () => {
             <ProgressBar width="w-3/12" />
             <button
               onClick={() => setView('annualIncome')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -349,12 +355,12 @@ const Onboarding = () => {
         )}
         {view === 'annualIncome' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               Annual household income
             </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="annualIncome"
               >
                 Your gross household income each year (before taxes)
@@ -380,7 +386,7 @@ const Onboarding = () => {
             <ProgressBar width="w-4/12" />
             <button
               onClick={() => setView('totalSavings')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -394,12 +400,12 @@ const Onboarding = () => {
         )}
         {view === 'totalSavings' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               Total savings and investments
             </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="totalSavings"
               >
                 In total, how much do you have in savings and investments?
@@ -425,7 +431,7 @@ const Onboarding = () => {
             <ProgressBar width="w-5/12" />
             <button
               onClick={() => setView('monthlySavings')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -439,12 +445,12 @@ const Onboarding = () => {
         )}
         {view === 'monthlySavings' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               Total household monthly savings
             </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="monthlySavings"
               >
                 In total, how much do you think you save each month?
@@ -470,7 +476,7 @@ const Onboarding = () => {
             <ProgressBar width="w-6/12" />
             <button
               onClick={() => setView('retirementIncome')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -485,12 +491,12 @@ const Onboarding = () => {
 
         {view === 'retirementIncome' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               Annual household income in retirement
             </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="retirementIncome"
               >
                 In total, how much do you think you need each year for your
@@ -517,7 +523,7 @@ const Onboarding = () => {
             <ProgressBar width="w-7/12" />
             <button
               onClick={() => setView('totalDebt')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -531,10 +537,12 @@ const Onboarding = () => {
         )}
         {view === 'totalDebt' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">Total household debt</h2>
+            <h2 className="w-full text-4xl font-bold font-montserrat">
+              Total household debt
+            </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="totalDebt"
               >
                 In total, how much do you owe? (excluding mortgage)
@@ -558,7 +566,7 @@ const Onboarding = () => {
             <ProgressBar width="w-8/12" />
             <button
               onClick={() => setView('houseEquity')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -572,12 +580,12 @@ const Onboarding = () => {
         )}
         {view === 'houseEquity' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               Do you have a mortgage?
             </h2>
             <div className="flex flex-col gap-2">
               <label
-                className="w-full block font-semibold text-sm mb-2"
+                className="w-full block font-semibold text-sm mb-2 font-nu"
                 htmlFor="houseEquity"
               >
                 Home equity
@@ -601,7 +609,7 @@ const Onboarding = () => {
             <ProgressBar width="w-9/12" />
             <button
               onClick={() => setView('postalCode')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -615,7 +623,9 @@ const Onboarding = () => {
         )}
         {view === 'postalCode' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">Postal Code</h2>
+            <h2 className="w-full text-4xl font-bold font-montserrat">
+              Postal Code
+            </h2>
             <div className="flex flex-col gap-2">
               <label
                 className="w-full block font-semibold "
@@ -627,7 +637,7 @@ const Onboarding = () => {
                 onChange={(e) => setPostalCode(e.target.value)}
                 name="postalCode"
                 type="text"
-                className={`border border-1 w-full block rounded-md p-4 bg-white ${
+                className={`border border-1 w-full block p-4 bg-white ${
                   firstName === '' && 'bg-red-50'
                 }`}
               />
@@ -636,7 +646,7 @@ const Onboarding = () => {
             <button
               disabled={postalCode.length < 3}
               onClick={() => setView('firstName')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -650,7 +660,7 @@ const Onboarding = () => {
         )}
         {view === 'firstName' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               What’s your first name?
             </h2>
             <div className="flex flex-col gap-2">
@@ -661,7 +671,7 @@ const Onboarding = () => {
                 Your First Name
               </label>
               <input
-                className={`border border-1 w-full block rounded-md p-4 bg-white ${
+                className={`border border-1 w-full block p-4 bg-white ${
                   firstName === '' && 'bg-red-50'
                 }`}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -674,7 +684,7 @@ const Onboarding = () => {
             <button
               disabled={firstName === ''}
               onClick={() => setView('phoneNumber')}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
             >
               Next
             </button>
@@ -688,7 +698,7 @@ const Onboarding = () => {
         )}
         {view === 'phoneNumber' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               Enter your phone number
             </h2>
             <div className="flex flex-col gap-2">
@@ -699,7 +709,7 @@ const Onboarding = () => {
                 You'll get a security code
               </label>
               <input
-                className={`border border-1 w-full block rounded-md p-4 bg-white`}
+                className={`border border-1 w-full block p-4 bg-white`}
                 id="phoneNumber"
                 name="phoneNumber"
                 type="tel"
@@ -708,7 +718,7 @@ const Onboarding = () => {
             </div>
             <button
               onClick={handleSignIn}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50 disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase disabled:opacity-50"
               disabled={phoneNumber.length < 10 || sendCode}
             >
               {sendCode ? 'Sending...' : 'Send code'}
@@ -723,7 +733,7 @@ const Onboarding = () => {
         )}
         {view === 'verifyPhoneNumber' && (
           <div className="flex flex-col gap-10">
-            <h2 className="w-full text-4xl font-bold ">
+            <h2 className="w-full text-4xl font-bold font-montserrat">
               Submit 6 digit verification code
             </h2>
             <div className="flex flex-col gap-2">
@@ -734,7 +744,7 @@ const Onboarding = () => {
                 Verification code
               </label>
               <input
-                className={`border border-1 w-full block rounded-md p-4 bg-white`}
+                className={`border border-1 w-full block p-4 bg-white`}
                 value={verificationCode}
                 name="phoneNumber"
                 type="number"
@@ -743,7 +753,7 @@ const Onboarding = () => {
             </div>
             <button
               onClick={handleVerify}
-              className="bg-primary text-white p-4 rounded-full text-xl font-bold disabled:opacity-50"
+              className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase font-montserrat uppercase"
             >
               Continue
             </button>
