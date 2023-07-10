@@ -26,7 +26,7 @@ const Onboarding = () => {
   const [firstName, setFirstName] = useState<string>('');
   const [postalCode, setPostalCode] = useState<string>('');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
-  const [verificationCode, setVerificationCode] = useState<number>(0);
+  const [verificationCode, setVerificationCode] = useState<string>();
   const [sendCode, setSendCode] = useState<boolean>(false);
   const supabase = createClientComponentClient();
 
@@ -736,7 +736,7 @@ const Onboarding = () => {
                 value={verificationCode}
                 name="phoneNumber"
                 type="number"
-                onChange={(e) => setVerificationCode(parseInt(e.target.value))}
+                onChange={(e) => setVerificationCode(e.target.value)}
               />
             </div>
             <button
