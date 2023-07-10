@@ -29,6 +29,7 @@ const Onboarding = () => {
   const [verificationCode, setVerificationCode] = useState<string>();
   const [sendCode, setSendCode] = useState<boolean>(false);
   const supabase = createClientComponentClient();
+  const [verifiedFailed, setVerifiedFailed] = useState<boolean>(false);
 
   function ProgressBar({ width }: { width: string }) {
     return (
@@ -108,6 +109,7 @@ const Onboarding = () => {
 
     if (response.error) {
       console.log('ERRROR');
+      setVerifiedFailed(true);
     } else {
       setView('answer');
       const prompt = endent`
@@ -746,11 +748,19 @@ const Onboarding = () => {
               Continue
             </button>
             <button
-              onClick={() => setView('phoneNumber')}
+              onClick={() => {
+                setSendCode(false);
+                setView('phoneNumber');
+              }}
               className="text-primary text-md underline"
             >
               Try again
             </button>
+            {verifiedFailed && (
+              <p className="text-red-500 text-center">
+                Verification failed. Please try again.
+              </p>
+            )}
           </div>
         )}
 
