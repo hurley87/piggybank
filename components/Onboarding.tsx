@@ -750,6 +750,7 @@ const Onboarding = () => {
             <button
               onClick={() => {
                 setSendCode(false);
+                setVerifiedFailed(false);
                 setView('phoneNumber');
               }}
               className="text-primary text-md underline"
