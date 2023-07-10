@@ -1,30 +1,21 @@
 import './globals.css';
 
-import { AuthProvider } from '@/components/AuthProvider';
-import createClient from '@/lib/supabase-server';
-
-// do not cache this layout
-export const revalidate = 0;
-
-type Props = {
-  children: React.ReactNode;
+export const metadata = {
+  title: 'Advisorsavvy',
+  description: 'Retirement Calculator',
 };
 
-export default async function RootLayout({ children }: Props) {
-  const supabase = createClient();
-
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const accessToken = session?.access_token || null;
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body>
-        <div className="flex min-h-screen flex-col items-center py-6 bg-white text-gray-700">
-          <AuthProvider accessToken={accessToken}>{children}</AuthProvider>
-        </div>
+        <main className="min-h-screen flex flex-col items-center bg-white text-gray-600 pt-4 w-full">
+          {children}
+        </main>
       </body>
     </html>
   );

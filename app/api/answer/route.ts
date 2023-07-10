@@ -8,8 +8,6 @@ export async function POST(req: Request): Promise<Response> {
       prompt: string;
     };
 
-    console.log('prompt', prompt);
-
     const apiKey = process.env.OPENAI_API_KEY as string;
     const stream = await OpenAIStream(prompt, apiKey);
 

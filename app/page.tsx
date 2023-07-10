@@ -1,45 +1,102 @@
-'use client';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import Onboarding from '@/components/Onboarding';
+import LogoutButton from '@/components/LogoutButton';
+import Image from 'next/image';
+import { Plan } from '@/components/Plan';
 
-import Link from 'next/link';
+export default async function Index() {
+  const supabase = createServerComponentClient({ cookies });
 
-import Auth from '@/components/Auth';
-import { useAuth, VIEWS } from '@/components/AuthProvider';
-import PiggyBank from '@/components/PiggyBank';
-import { useEffect, useState } from 'react';
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-export default function Home() {
-  const { user, view, signOut } = useAuth();
-  const [showPiggyBank, setShowPiggyBank] = useState(true);
+  return (
+    <div className="w-full px-4 py-0">
+      {user ? (
+        <>
+          <div className="w-full relative flex justify-between">
+            <Image
+              src="/logo.png"
+              alt="logo"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+            <div className="flex gap-2">
+              <p className="pt-2">{user.phone}</p>
+              <LogoutButton />
+            </div>
+          </div>
+          <div className="relative w-full items-center">
+            <Plan />
+          </div>
+          <div className="drawer">
+            <div className="relative">
+              <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            </div>
 
-  // use effect to load PiggyBank component for 2 seconds before showing the auth component
-  useEffect(() => {
-    setTimeout(() => {
-      setShowPiggyBank(false);
-    }, 2500);
-  }, []);
-
-  if (showPiggyBank) {
-    return <PiggyBank />;
-  }
-
-  if (view === VIEWS.UPDATE_PASSWORD) {
-    return <Auth view={view} />;
-  }
-
-  if (user) {
-    return (
-      <div className="card">
-        <h2>Welcome!</h2>
-        <code className="highlight">{user.role}</code>
-        <Link className="button" href="/profile">
-          Go to Profile
-        </Link>
-        <button type="button" className="button-inverse" onClick={signOut}>
-          Sign Out
-        </button>
-      </div>
-    );
-  }
-
-  return <Auth view={view} />;
+            <div className="drawer-content">
+              {/* Page content here */}
+              <label htmlFor="my-drawer" className="cursor-pointer"></label>
+            </div>
+            <div className="drawer-side">
+              <label htmlFor="my-drawer" className="drawer-overlay"></label>
+              <ul className="p-4 w-80 h-full bg-base-200 text-base-content gap-2">
+                {/* Sidebar content here */}
+                <li className="pb-4">
+                  <h3 className="font-bold">Current Age</h3>
+                  <p>{user.user_metadata.currentAge}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">Retirement Age</h3>
+                  <p>{user.user_metadata.retirementAge}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">Retirement Age</h3>
+                  <p>{user.user_metadata.retirementAge}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">Dependants</h3>
+                  <p>{user.user_metadata.dependents}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">Annual Income</h3>
+                  <p>{user.user_metadata.annualIncome}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">Total Savings</h3>
+                  <p>{user.user_metadata.totalSavings}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">Monthly Savings</h3>
+                  <p>{user.user_metadata.monthlySavings}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">Income in Retirement</h3>
+                  <p>{user.user_metadata.retirementIncome}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">Total Debt</h3>
+                  <p>{user.user_metadata.totalDebt}</p>
+                </li>
+                <li className="pb-2">
+                  <h3 className="font-bold">House Equity</h3>
+                  <p>{user.user_metadata.houseEquity}</p>
+                </li>
+                <br />
+                <hr />
+                <br />
+                <p className="pb-2">{user.phone}</p>
+                <LogoutButton />
+              </ul>
+            </div>
+          </div>
+        </>
+      ) : (
+        <Onboarding />
+      )}
+    </div>
+  );
 }
