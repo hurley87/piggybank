@@ -31,7 +31,7 @@ export default async function Index() {
             <Plan />
           </div>
           <div className="relative w-full items-center pb-20">
-            <div className="w-full px-4 max-w-sm mx-auto">
+            <div className="w-full max-w-sm mx-auto">
               <p>
                 Did you know that investors who received professional advice
                 were 13% more likely than those who did not to feel confident
