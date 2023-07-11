@@ -1,5 +1,6 @@
 import './globals.css';
 import { Nunito, Montserrat } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 
 const nunito = Nunito({
   subsets: [],
@@ -33,6 +34,7 @@ export default function RootLayout({
           }`}
         >
           {children}
+          <Analytics />
         </main>
       </body>
     </html>
