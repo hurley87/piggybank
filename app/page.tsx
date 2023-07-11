@@ -24,72 +24,26 @@ export default async function Index() {
               height={40}
             />
             <div className="flex gap-2">
-              <p className="pt-2">{user.phone}</p>
+              <p className="pt-3 text-xs">{user.phone}</p>
               <LogoutButton />
             </div>
           </div>
           <div className="relative w-full items-center">
             <Plan />
           </div>
-          <div className="drawer">
-            <div className="relative">
-              <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-            </div>
-
-            <div className="drawer-content">
-              {/* Page content here */}
-              <label htmlFor="my-drawer" className="cursor-pointer"></label>
-            </div>
-            <div className="drawer-side">
-              <label htmlFor="my-drawer" className="drawer-overlay"></label>
-              <ul className="p-4 w-80 h-full bg-base-200 text-base-content gap-2">
-                {/* Sidebar content here */}
-                <li className="pb-4">
-                  <h3 className="font-bold">Current Age</h3>
-                  <p>{user.user_metadata.currentAge}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">Retirement Age</h3>
-                  <p>{user.user_metadata.retirementAge}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">Retirement Age</h3>
-                  <p>{user.user_metadata.retirementAge}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">Dependants</h3>
-                  <p>{user.user_metadata.dependents}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">Annual Income</h3>
-                  <p>{user.user_metadata.annualIncome}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">Total Savings</h3>
-                  <p>{user.user_metadata.totalSavings}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">Monthly Savings</h3>
-                  <p>{user.user_metadata.monthlySavings}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">Income in Retirement</h3>
-                  <p>{user.user_metadata.retirementIncome}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">Total Debt</h3>
-                  <p>{user.user_metadata.totalDebt}</p>
-                </li>
-                <li className="pb-2">
-                  <h3 className="font-bold">House Equity</h3>
-                  <p>{user.user_metadata.houseEquity}</p>
-                </li>
-                <br />
-                <hr />
-                <br />
-                <p className="pb-2">{user.phone}</p>
-                <LogoutButton />
-              </ul>
+          <div className="relative w-full items-center pb-20">
+            <div className="w-full px-4 max-w-sm mx-auto">
+              <p>
+                Did you know that investors who received professional advice
+                were 13% more likely than those who did not to feel confident
+                about a secure retirement?
+              </p>
+              <a
+                className="bg-primary text-white p-4 text-md font-bold duration-200 w-full block text-center mt-4 font-montserrat uppercase mb-10"
+                href="https://advisorsavvy.com/financial-advisors/"
+              >
+                Find an advisor for free
+              </a>
             </div>
           </div>
         </>

@@ -24,7 +24,7 @@ export const Plan: React.FC = () => {
   console.log(plans);
 
   return (
-    <div className="whitespace-pre-line pb-20">
+    <div className="whitespace-pre-line">
       <div className="w-full p-4 max-w-sm mx-auto">{plans[0]?.plan}</div>
     </div>
   );

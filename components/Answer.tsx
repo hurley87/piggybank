@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './answer.module.css';
 import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 interface AnswerProps {
   text: string;
@@ -13,7 +12,6 @@ interface AnswerProps {
 export const Answer: React.FC<AnswerProps> = ({ text, addPlan }) => {
   const [words, setWords] = useState<string[]>([]);
   const [showLogin, setShowLogin] = useState<boolean>(false);
-  const supabase = createClientComponentClient();
   const router = useRouter();
 
   useEffect(() => {
@@ -34,9 +32,6 @@ export const Answer: React.FC<AnswerProps> = ({ text, addPlan }) => {
   async function updateUser() {
     const plan = words.join(' ');
 
-    //TODO: create plan
-    console.log(plan);
-
     await addPlan(plan);
 
     router.refresh();
@@ -56,7 +51,7 @@ export const Answer: React.FC<AnswerProps> = ({ text, addPlan }) => {
       {showLogin && (
         <button
           onClick={updateUser}
-          className="bg-primary text-white p-4 rounded-full text-xl font-bold duration-200 hover:bg-green-600 w-full block text-center mt-4 font-montserrat uppercase"
+          className="bg-primary text-white p-4 text-xl font-bold duration-200 w-full block text-center mt-4 font-montserrat uppercase"
         >
           Continue
         </button>
