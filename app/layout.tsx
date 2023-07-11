@@ -14,6 +14,9 @@ const montserrat = Montserrat({
 export const metadata = {
   title: 'Advisorsavvy',
   description: 'Retirement Calculator',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({

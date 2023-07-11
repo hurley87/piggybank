@@ -30,7 +30,7 @@ export default async function Index() {
           <div className="relative w-full items-center">
             <Plan />
           </div>
-          <div className="relative w-full items-center pb-20">
+          <div className="relative w-full items-center">
             <div className="w-full max-w-sm mx-auto">
               <p>
                 Did you know that investors who received professional advice
