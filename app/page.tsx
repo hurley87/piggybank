@@ -24,7 +24,6 @@ export default async function Index() {
               height={40}
             />
             <div className="flex gap-2">
-              <p className="pt-3 text-xs">{user.phone}</p>
               <LogoutButton />
             </div>
           </div>
