@@ -5,6 +5,7 @@ import { Answer } from './Answer';
 import endent from 'endent';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import PiggyBank from './PiggyBank';
+import va from '@vercel/analytics';
 
 const Onboarding = () => {
   const [view, setView] = useState<string>('starter');
@@ -86,6 +87,7 @@ const Onboarding = () => {
 
   async function handleSignIn() {
     setSendCode(true);
+    va.track('SendCode');
     let response = await supabase.auth.signInWithOtp({
       phone: `+1${phoneNumber}`,
       options: {
@@ -116,6 +118,7 @@ const Onboarding = () => {
   }
 
   async function handleVerify() {
+    va.track('VerifyCode');
     let response = await supabase.auth.verifyOtp({
       phone: `+1${phoneNumber}`,
       token: `${verificationCode}`,
@@ -124,9 +127,11 @@ const Onboarding = () => {
 
     if (response.error) {
       console.log('ERRROR');
+      va.track('VerifyFailed');
       setVerifiedFailed(true);
     } else {
       setView('answer');
+      va.track('VerifySuccess');
       const prompt = endent`
     Consider ${firstName}, a Canadian between the ages of ${currentAge} with ${dependents} kids that has an annual income between ${annualIncome}, has between ${totalSavings} in savings and investments, and saves between ${monthlySavings} per month. They'd like between ${retirementIncome} income per year in retirement and they have ${totalDebt} in debt. I asked if they have a mortgage  and they said "${houseEquity}". Can they retire between the ages of ${retirementAge}? Give their likely retirement age in one sentence and three tips that may help them retire earlier. Be concise and only recommend they speak to a financial advisor at the end. 
 
@@ -166,6 +171,7 @@ const Onboarding = () => {
   }
 
   const addPlan = async (plan: string) => {
+    va.track('CreatePlan');
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -198,6 +204,7 @@ const Onboarding = () => {
 
       if (error) {
         console.log(error);
+        va.track('CreatePlanFailed');
       }
     }
   };
@@ -222,7 +229,10 @@ const Onboarding = () => {
               </div>
 
               <button
-                onClick={() => setView('currentAge')}
+                onClick={() => {
+                  va.track('GetStarted');
+                  setView('currentAge');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -262,7 +272,10 @@ const Onboarding = () => {
               </div>
 
               <button
-                onClick={() => setView('retirementAge')}
+                onClick={() => {
+                  va.track('CurrentAge');
+                  setView('retirementAge');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -294,7 +307,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-1/12" />
               <button
-                onClick={() => setView('dependents')}
+                onClick={() => {
+                  va.track('RetirementAge');
+                  setView('dependents');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold"
               >
                 Next
@@ -333,7 +349,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-2/12" />
               <button
-                onClick={() => setView('risk')}
+                onClick={() => {
+                  va.track('Dependents');
+                  setView('risk');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -377,7 +396,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-3/12" />
               <button
-                onClick={() => setView('annualIncome')}
+                onClick={() => {
+                  va.track('RiskTolerance');
+                  setView('annualIncome');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -422,7 +444,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-4/12" />
               <button
-                onClick={() => setView('totalSavings')}
+                onClick={() => {
+                  va.track('AnnualIncome');
+                  setView('totalSavings');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -467,7 +492,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-5/12" />
               <button
-                onClick={() => setView('monthlySavings')}
+                onClick={() => {
+                  va.track('TotalSavings');
+                  setView('monthlySavings');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -512,7 +540,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-6/12" />
               <button
-                onClick={() => setView('retirementIncome')}
+                onClick={() => {
+                  va.track('monthlySavings');
+                  setView('retirementIncome');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -559,7 +590,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-7/12" />
               <button
-                onClick={() => setView('totalDebt')}
+                onClick={() => {
+                  va.track('retirementIncome');
+                  setView('totalDebt');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -602,7 +636,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-8/12" />
               <button
-                onClick={() => setView('houseEquity')}
+                onClick={() => {
+                  va.track('totalDebt');
+                  setView('houseEquity');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -645,7 +682,10 @@ const Onboarding = () => {
               </div>
               <ProgressBar width="w-9/12" />
               <button
-                onClick={() => setView('postalCode')}
+                onClick={() => {
+                  va.track('houseEquity');
+                  setView('postalCode');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -682,7 +722,10 @@ const Onboarding = () => {
               <ProgressBar width="w-10/12" />
               <button
                 disabled={postalCode.length < 3}
-                onClick={() => setView('firstName')}
+                onClick={() => {
+                  va.track('postalCode');
+                  setView('firstName');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -720,7 +763,10 @@ const Onboarding = () => {
               <ProgressBar width="w-11/12" />
               <button
                 disabled={firstName === ''}
-                onClick={() => setView('phoneNumber')}
+                onClick={() => {
+                  va.track('firstName');
+                  setView('phoneNumber');
+                }}
                 className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase"
               >
                 Next
@@ -799,6 +845,7 @@ const Onboarding = () => {
                   setSendCode(false);
                   setVerifiedFailed(false);
                   setView('phoneNumber');
+                  va.track('verifyPhoneNumberTryAgain');
                 }}
                 className="text-primary text-md underline"
               >

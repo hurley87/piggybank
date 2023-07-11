@@ -21,8 +21,6 @@ export const Plan: React.FC = () => {
     fetchTodos();
   }, [supabase]);
 
-  console.log(plans);
-
   return (
     <div className="whitespace-pre-line">
       <div className="w-full max-w-sm mx-auto py-6">{plans[0]?.plan}</div>

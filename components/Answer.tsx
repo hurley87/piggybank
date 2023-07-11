@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './answer.module.css';
 import { useRouter } from 'next/navigation';
+import va from '@vercel/analytics';
 
 interface AnswerProps {
   text: string;
@@ -33,6 +34,8 @@ export const Answer: React.FC<AnswerProps> = ({ text, addPlan }) => {
     const plan = words.join(' ');
 
     await addPlan(plan);
+
+    va.track('CreatePlan');
 
     router.refresh();
   }

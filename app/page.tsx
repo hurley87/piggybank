@@ -4,6 +4,7 @@ import Onboarding from '@/components/Onboarding';
 import LogoutButton from '@/components/LogoutButton';
 import Image from 'next/image';
 import { Plan } from '@/components/Plan';
+import va from '@vercel/analytics';
 
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies });
@@ -38,6 +39,9 @@ export default async function Index() {
                 about a secure retirement?
               </p>
               <a
+                onClick={() => {
+                  va.track('FindAdvisor');
+                }}
                 className="bg-primary text-white p-4 text-md font-bold duration-200 w-full block text-center mt-4 font-montserrat uppercase mb-10"
                 href="https://advisorsavvy.com/financial-advisors/"
               >

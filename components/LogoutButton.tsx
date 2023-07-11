@@ -2,6 +2,7 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
+import va from '@vercel/analytics';
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function LogoutButton() {
   const signOut = async () => {
     await supabase.auth.signOut();
     router.refresh();
+    va.track('Logout');
   };
 
   return (
