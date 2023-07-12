@@ -12,6 +12,8 @@ export default async function Index() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  console.log(user);
+
   return (
     <div className="w-full px-4 py-0">
       {user ? (
@@ -28,7 +30,7 @@ export default async function Index() {
             </div>
           </div>
           <div className="relative w-full items-center">
-            <Plan />
+            <Plan userId={user.id} />
           </div>
           <div className="relative w-full items-center">
             <div className="w-full max-w-sm mx-auto">

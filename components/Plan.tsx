@@ -3,7 +3,11 @@
 import React, { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-export const Plan: React.FC = () => {
+type PlanProps = {
+  userId: string;
+};
+
+export const Plan = ({ userId }: PlanProps) => {
   const [plans, setPlans] = useState<any>([]);
   const supabase = createClientComponentClient();
 
@@ -12,6 +16,7 @@ export const Plan: React.FC = () => {
       const { data: plans, error } = await supabase
         .from('Plans')
         .select('*')
+        .eq('userId', userId)
         .order('id', { ascending: false });
 
       if (error) console.log('error', error);
