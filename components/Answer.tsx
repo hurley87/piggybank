@@ -23,7 +23,7 @@ export const Answer: React.FC<AnswerProps> = ({ text, addPlan }) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLogin(true);
-    }, 5000);
+    }, 6000);
 
     return () => {
       clearTimeout(timeout);
@@ -56,7 +56,7 @@ export const Answer: React.FC<AnswerProps> = ({ text, addPlan }) => {
           onClick={updateUser}
           className="bg-primary text-white p-4 text-xl font-bold duration-200 w-full block text-center mt-4 font-montserrat uppercase"
         >
-          Continue
+          Save result
         </button>
       )}
     </div>

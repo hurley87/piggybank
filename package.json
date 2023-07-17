@@ -36,5 +36,10 @@
   },
   "devDependencies": {
     "daisyui": "^3.1.6"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }

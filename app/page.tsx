@@ -30,9 +30,6 @@ export default async function Index() {
             </div>
           </div>
           <div className="relative w-full items-center">
-            <Plan userId={user.id} />
-          </div>
-          <div className="relative w-full items-center">
             <div className="w-full max-w-sm mx-auto">
               <p>
                 Did you know that investors who received professional advice
@@ -46,6 +43,9 @@ export default async function Index() {
                 Find an advisor for free
               </a>
             </div>
+          </div>
+          <div className="relative w-full items-center">
+            <Plan userId={user.id} />
           </div>
         </>
       ) : (
