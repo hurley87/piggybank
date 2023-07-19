@@ -97,32 +97,40 @@ const Onboarding = () => {
   async function handleSignIn() {
     setSendCode(true);
     va.track('SendCode');
-    let response = await supabase.auth.signInWithOtp({
-      phone: `+1${phoneNumber}`,
-      options: {
-        data: {
-          currentAge,
-          retirementAge,
-          dependents,
-          annualIncome,
-          totalSavings,
-          monthlySavings,
-          retirementIncome,
-          totalDebt,
-          houseEquity,
-          postalCode,
-          riskTolerance,
-          firstName,
+
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        phone: `+1${phoneNumber}`,
+        options: {
+          data: {
+            currentAge,
+            retirementAge,
+            dependents,
+            annualIncome,
+            totalSavings,
+            monthlySavings,
+            retirementIncome,
+            totalDebt,
+            houseEquity,
+            postalCode,
+            riskTolerance,
+            firstName,
+          },
         },
-      },
-    });
+      });
 
-    console.log(response);
-
-    if (response.error) {
-      console.log('ERRROR');
-    } else {
-      setView('verifyPhoneNumber');
+      if (error) {
+        console.log(error);
+        alert("We couldn't send you a code. Please try again.");
+        setSendCode(false);
+        setPhoneNumber('');
+      } else {
+        setView('verifyPhoneNumber');
+      }
+    } catch (error) {
+      console.log(error);
+      setSendCode(false);
+      setPhoneNumber('');
     }
   }
 
