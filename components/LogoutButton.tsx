@@ -21,7 +21,7 @@ export default function LogoutButton() {
       className="py-2 px-4 bg-primary text-white uppercase font-montserrat font-bold"
       onClick={signOut}
     >
-      Logout
+      Try again
     </button>
   );
 }

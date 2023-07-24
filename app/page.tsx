@@ -19,12 +19,7 @@ export default async function Index() {
       {user ? (
         <>
           <div className="w-full relative flex justify-between">
-            <Image
-              src="https://advisorsavvy.com/wp-content/uploads/2019/05/AdvisorSavvy-Logo-RGB.png"
-              alt="logo"
-              width={162}
-              height={40}
-            />
+            <Image src="/fp.png" alt="logo" width={162} height={40} />
             <div className="flex gap-2">
               <LogoutButton />
             </div>

@@ -98,9 +98,12 @@ const Onboarding = () => {
     setSendCode(true);
     va.track('SendCode');
 
+    console.log(phoneNumber);
+
     try {
       const { error } = await supabase.auth.signInWithOtp({
-        phone: `+1${phoneNumber}`,
+        // email: `+1${phoneNumber}`,
+        email: phoneNumber,
         options: {
           data: {
             currentAge,
@@ -137,9 +140,9 @@ const Onboarding = () => {
   async function handleVerify() {
     va.track('VerifyCode');
     let response = await supabase.auth.verifyOtp({
-      phone: `+1${phoneNumber}`,
+      email: `+1${phoneNumber}`,
       token: `${verificationCode}`,
-      type: 'sms',
+      type: 'email',
     });
 
     if (response.error) {
@@ -227,19 +230,15 @@ const Onboarding = () => {
   };
 
   const handleChange = (e: any) => {
-    const number = e.target.value.replace(/\D/g, '');
+    // const number = e.target.value.replace(/\D/g, '');
+    const number = e.target.value;
     setPhoneNumber(number);
   };
 
   return (
     <>
       <div>
-        <Image
-          src="https://advisorsavvy.com/wp-content/uploads/2019/05/AdvisorSavvy-Logo-RGB.png"
-          alt="logo"
-          width={162}
-          height={40}
-        />
+        <Image src="/fp.png" alt="logo" width={162} height={40} />
       </div>
       <div className="w-full p-4 max-w-sm mx-auto">
         {showPiggy ? (
@@ -815,27 +814,27 @@ const Onboarding = () => {
             {view === 'phoneNumber' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold font-montserrat">
-                  Enter your phone number a get a security code
+                  Enter your email a get a security code
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
                     className="w-full block font-semibold "
                     htmlFor="phoneNumber"
                   >
-                    10 digits. No dashes, spaces or brackets.
+                    Your email
                   </label>
                   <input
                     className={`border border-1 w-full block p-4 bg-white`}
                     id="phoneNumber"
                     name="phoneNumber"
-                    type="number"
+                    type="email"
                     onChange={handleChange}
                   />
                 </div>
                 <button
                   onClick={handleSignIn}
                   className="bg-primary text-white p-4 text-xl font-bold disabled:opacity-50 font-montserrat uppercase disabled:opacity-50"
-                  disabled={phoneNumber.length < 10 || sendCode}
+                  // disabled={phoneNumber.length < 10 || sendCode}
                 >
                   {sendCode ? 'Sending...' : 'Send code'}
                 </button>
