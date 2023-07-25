@@ -139,8 +139,10 @@ const Onboarding = () => {
 
   async function handleVerify() {
     va.track('VerifyCode');
+    console.log('VerifyCode');
+    console.log(verificationCode);
     let response = await supabase.auth.verifyOtp({
-      email: `+1${phoneNumber}`,
+      email: `${phoneNumber}`,
       token: `${verificationCode}`,
       type: 'email',
     });
