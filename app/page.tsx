@@ -33,7 +33,7 @@ export default async function Index() {
               </p>
               <a
                 className="bg-primary text-white p-4 text-md font-bold duration-200 w-full block text-center mt-4 font-montserrat uppercase mb-10"
-                href="https://advisorsavvy.com/financial-advisors/"
+                href="https://financialpost.com/tag/financial-advisor/"
               >
                 Find an advisor for free
               </a>
