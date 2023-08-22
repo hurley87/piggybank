@@ -235,7 +235,12 @@ const Onboarding = () => {
   return (
     <>
       <div>
-        <Image src="/fp.png" alt="logo" width={162} height={40} />
+        <Image
+          src="https://advisorsavvy.com/wp-content/uploads/2019/05/AdvisorSavvy-Logo-RGB.png"
+          alt="logo"
+          width={162}
+          height={40}
+        />
       </div>
       <div className="w-full p-4 max-w-sm mx-auto">
         {showPiggy ? (
