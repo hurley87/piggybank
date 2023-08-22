@@ -7,6 +7,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import PiggyBank from './PiggyBank';
 import va from '@vercel/analytics';
 import Image from 'next/image';
+import * as fbq from '../lib/fpixel';
 
 const Onboarding = () => {
   const [view, setView] = useState<string>('starter');
@@ -154,6 +155,7 @@ const Onboarding = () => {
     } else {
       setView('answer');
       va.track('VerifySuccess');
+      fbq.event('Lead');
       const prompt = endent`
     Consider ${firstName}, a Canadian between the ages of ${currentAge} with ${dependents} kids that has an annual income between ${annualIncome}, has between ${totalSavings} in savings and investments, and saves between ${monthlySavings} per month. They'd like between ${retirementIncome} income per year in retirement and they have ${totalDebt} in debt. I asked if they have a mortgage  and they said "${houseEquity}". Can they retire between the ages of ${retirementAge}? Give their likely retirement age in one sentence and three tips that may help them retire earlier. Be concise and only recommend they speak to a financial advisor at the end. 
 
