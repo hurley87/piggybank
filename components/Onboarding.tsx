@@ -200,29 +200,24 @@ const Onboarding = () => {
     console.log(user);
 
     if (plan.length) {
-      const { data, error } = await supabase
-        .from('Plans')
-        .insert([
-          {
-            userId: user?.id,
-            plan,
-            createdAt: new Date(),
-            retirementAge,
-            currentAge,
-            dependents,
-            annualIncome,
-            totalSavings,
-            monthlySavings,
-            retirementIncome,
-            totalDebt,
-            houseEquity,
-            postalCode,
-            riskTolerance,
-            firstName,
-            phoneNumber,
-          },
-        ])
-        .select();
+      const { error } = await supabase.from('Plans').insert({
+        userId: user?.id,
+        plan,
+        createdAt: new Date(),
+        retirementAge,
+        currentAge,
+        dependents,
+        annualIncome,
+        totalSavings,
+        monthlySavings,
+        retirementIncome,
+        totalDebt,
+        houseEquity,
+        postalCode,
+        riskTolerance,
+        firstName,
+        phoneNumber,
+      });
 
       if (error) {
         console.log(error);
