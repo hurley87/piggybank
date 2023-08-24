@@ -818,7 +818,7 @@ const Onboarding = () => {
             {view === 'phoneNumber' && (
               <div className="flex flex-col gap-10">
                 <h2 className="w-full text-4xl font-bold font-montserrat">
-                  Enter your email a get a security code
+                  Enter your email to get a security code
                 </h2>
                 <div className="flex flex-col gap-2">
                   <label
