@@ -12,8 +12,6 @@ export default async function Index() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
-
   return (
     <div className="w-full px-4 py-0">
       {user ? (
